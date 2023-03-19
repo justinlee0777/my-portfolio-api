@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    mysql2 (0.5.5)
     rack (3.0.4.2)
     rackup (2.1.0)
       rack (>= 3)
@@ -9,8 +10,10 @@ GEM
 
 PLATFORMS
   arm64-darwin-22
+  x86_64-linux
 
 DEPENDENCIES
+  mysql2 (~> 0.5.5)
   rack
   rackup (~> 2.1)
 

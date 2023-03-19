@@ -1,2 +1,10 @@
+require 'mysql2'
+require 'yaml'
+
 require_relative './app/main'
-run Main.new
+
+dbconfig = YAML::load(File.open('config/database.yml'))
+
+conn = Mysql2::Client.new(dbconfig['production'])
+
+run Main.new conn
