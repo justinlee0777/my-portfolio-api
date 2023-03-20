@@ -1,11 +1,18 @@
 require 'net/http'
 require 'json'
 
-module Poem
-    def Poem.get
-      uri = URI('https://poetrydb.org/random')
-      responseString = Net::HTTP.get uri;
-      response = JSON.parse responseString
-      response[0]
+class Poem
+    def initialize client
+      @client = client
+    end
+
+    def get
+      response = @client.get_item({
+        table_name: 'Poem',
+        key: {
+          poem_id: 'poem-of-the-day'
+        }
+      })
+      response['item']
     end
 end
