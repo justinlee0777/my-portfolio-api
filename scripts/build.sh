@@ -1,3 +1,3 @@
 #!/bin/bash   
 
-zip -r bundle.zip config.ru app
+zip -r ruby.zip config.ru app Gemfile* Procfile

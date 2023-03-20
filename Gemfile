@@ -5,4 +5,7 @@ source "https://rubygems.org"
 git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
 gem "rack"
-gem "rackup", "~> 2.1"
+gem "rackup"
+gem "rack-parser"
+gem "puma"
+gem "sinatra"
