@@ -12,12 +12,12 @@ enumeratedLines = File.foreach(filename).lazy
 
 poem_id = SecureRandom.uuid
 
-title = enumeratedLines.next.strip
-author = enumeratedLines.next.strip
-translator = enumeratedLines.next.strip
+title = enumeratedLines.next.rstrip
+author = enumeratedLines.next.rstrip
+translator = enumeratedLines.next.rstrip
 
 loop {
-    line = enumeratedLines.next.strip
+    line = enumeratedLines.next.rstrip
     lines += [line]
 }
 dynamoResource = Aws::DynamoDB::Resource.new
