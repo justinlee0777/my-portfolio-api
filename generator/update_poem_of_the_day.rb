@@ -22,7 +22,6 @@ def update_poem_of_the_day(dynamo_resource)
             poem_id: poemId
         }
     })
-    
     poem = poemResponse['item']
 
     table.update_item({
@@ -34,13 +33,13 @@ def update_poem_of_the_day(dynamo_resource)
             '#Author': 'author',
             '#Translator': 'translator',
             '#Lines': 'lines'
-        }, 
+        },
         expression_attribute_values: {
             ':title': poem['title'],
             ':author': poem['author'],
             ':translator': poem['translator'],
             ':lines': poem['lines']
-        }, 
-        update_expression: 'SET #Title = :title, #Author = :author, #Translator = :translator, #Lines = :lines', 
+        },
+        update_expression: 'SET #Title = :title, #Author = :author, #Translator = :translator, #Lines = :lines',
     })
 end
