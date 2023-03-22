@@ -13,7 +13,23 @@ class Main < Sinatra::Base
         @poem = Poem.new client
     end
 
+    before do
+        allowedOrigins = [
+            /localhost:3000/,
+            /iamjustinlee.com/
+        ]
+
+        origin = request.get_header 'HTTP_ORIGIN'
+        headers 'Access-Control-Allow-Methods': 'GET'
+
+        if origin != nil
+            headers 'Access-Control-Allow-Origin': origin if allowedOrigins.any? { |allowedOrigin| allowedOrigin.match origin }
+        end
+    end
+
     get '/poem' do
+        content_type :json
+
         poem = @poem.get
         JSON.generate(poem)
     end
