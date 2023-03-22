@@ -12,7 +12,7 @@ def update_poem_of_the_day(dynamo_resource)
         filter_expression: '#pid <> :poemOfTheDay'
     })
 
-    poemIndex = rand(poemIds['count'])
+    poemIndex = rand poemIds['count']
 
     poemId = poemIds['items'][poemIndex]['poem_id']
 

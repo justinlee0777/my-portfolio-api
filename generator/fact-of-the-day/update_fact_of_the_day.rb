@@ -1,17 +1,16 @@
+require_relative 'get_api_ninja_fact'
+
 def update_fact_of_the_day(dynamo_resource)
-    apiKey = ENV['API_NINJA_KEY']
-    apiNinjaUrl = 'https://api.api-ninjas.com/v1/facts?limit=1'
+    apiSources = [
+        'API Ninja'
+    ]
 
-    uri = URI.parse(apiNinjaUrl)
+    index = rand apiSources.length
 
-    response = Net::HTTP.get(uri, initheader = { 'Content-Type': 'application/json', 'X-Api-Key': apiKey })
-    responseJson = JSON.parse response
-    content = responseJson[0]['fact']
-
-    content += '.' if !content.end_with? '.'
-
-    apiNinjaDisplayName = 'API Ninjas'
-    apiNinjaWebPage = 'https://api-ninjas.com'
+    case index
+        when 0
+            fact = get_api_ninja_fact
+    end
 
     table = dynamo_resource.table('Facts')
 
@@ -25,9 +24,9 @@ def update_fact_of_the_day(dynamo_resource)
             '#Content': 'content',
         }, 
         expression_attribute_values: {
-            ':source': apiNinjaDisplayName,
-            ':sourceRef': apiNinjaWebPage,
-            ':content': content
+            ':source': fact[:source],
+            ':sourceRef': fact[:sourceRef],
+            ':content': fact[:content]
         }, 
         update_expression: 'SET #Source = :source, #SourceRef = :sourceRef, #Content = :content' 
     })
