@@ -1,17 +1,17 @@
+require 'httparty'
+
 def get_useless_fact
     uselessFactUrl = 'https://uselessfacts.jsph.pl/api/v2/facts/random'
 
-    uri = URI.parse(uselessFactUrl)
+    response = HTTParty.get(uselessFactUrl, headers = { 'Content-Type': 'application/json' })
 
-    response = Net::HTTP.get(uri, initheader = { 'Content-Type': 'application/json' })
-    responseJson = JSON.parse response
-    content = responseJson['text']
+    content = response['text']
 
     content += '.' if !content.end_with? '.'
 
     {
         source: 'uselessfacts',
-        sourceRef: 'https://uselessfacts.jsph.pl/',
+        sourceRef: 'https://uselessfacts.jsph.pl',
         content: content
     }
 end

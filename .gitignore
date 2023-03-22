@@ -4,4 +4,4 @@ function.zip
 poem.txt
 
 .bundle
-*/vendor/bundle
+*/vendor
