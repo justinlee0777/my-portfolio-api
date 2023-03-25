@@ -1,19 +1,19 @@
-require "httparty"
+require 'httparty'
 
 def get_useless_fact
-  uselessFactUrl = "https://uselessfacts.jsph.pl/api/v2/facts/random"
+  uselessFactUrl = 'https://uselessfacts.jsph.pl/api/v2/facts/random'
 
   response =
     HTTParty.get(
       uselessFactUrl,
-      headers = { "Content-Type": "application/json" }
+      headers = { 'Content-Type': 'application/json' }
     )
 
-  content = response["text"]
+  content = response['text']
 
   {
-    source: "uselessfacts",
-    sourceRef: "https://uselessfacts.jsph.pl",
+    source: 'uselessfacts',
+    sourceRef: 'https://uselessfacts.jsph.pl',
     content: content
   }
 end

@@ -1,5 +1,5 @@
-require "aws-sdk-dynamodb"
-require "securerandom"
+require 'aws-sdk-dynamodb'
+require 'securerandom'
 
 filename = ARGV[0]
 
@@ -22,7 +22,7 @@ loop do
 end
 dynamoResource = Aws::DynamoDB::Resource.new
 
-table = dynamoResource.table("Poem")
+table = dynamoResource.table('Poem')
 
 table.put_item(
   {
