@@ -1,3 +1,4 @@
 #!/bin/bash   
 cd web
-zip -r ruby ./*
+rm ruby.zip
+zip -r ruby Procfile config.ru Gemfile* app/*.rb
