@@ -1,3 +1,5 @@
+.DS_Store
+
 ruby.zip
 function.zip
 
@@ -5,3 +7,5 @@ poem.txt
 
 .bundle
 */vendor
+
+node_modules
