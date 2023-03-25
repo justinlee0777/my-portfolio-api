@@ -5,7 +5,7 @@ require_relative './poem-of-the-day/update_poem_of_the_day'
 require_relative './fact-of-the-day/update_fact_of_the_day'
 require_relative './painting-of-the-day/update_painting_of_the_day'
 
-def lambda_handler(event:, context:)
+def lambda_handler(*)
   dynamo_resource = Aws::DynamoDB::Resource.new({ region: 'us-east-2' })
 
   threads = []

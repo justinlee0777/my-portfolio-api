@@ -6,7 +6,7 @@ def get_useless_fact
   response =
     HTTParty.get(
       uselessFactUrl,
-      headers = { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' }
     )
 
   content = response['text']

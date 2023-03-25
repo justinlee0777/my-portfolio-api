@@ -4,6 +4,7 @@ require 'json'
 
 require_relative './poem.rb'
 require_relative './fact.rb'
+require_relative './painting.rb'
 
 class Main < Sinatra::Base
   def initialize
@@ -13,6 +14,7 @@ class Main < Sinatra::Base
 
     @poem = Poem.new client
     @fact = Fact.new client
+    @painting = Painting.new client
   end
 
   before do
@@ -40,5 +42,12 @@ class Main < Sinatra::Base
 
     fact = @fact.get
     JSON.generate(fact)
+  end
+
+  get '/painting' do
+    content_type :json
+
+    painting = @painting.get
+    JSON.generate(painting)
   end
 end

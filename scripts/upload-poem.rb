@@ -3,9 +3,6 @@ require 'securerandom'
 
 filename = ARGV[0]
 
-title = nil
-author = nil
-translator = nil
 lines = []
 
 enumeratedLines = File.foreach(filename).lazy
