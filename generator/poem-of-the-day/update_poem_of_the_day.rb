@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def update_poem_of_the_day(dynamo_resource)
   table = dynamo_resource.table('Poem')
 

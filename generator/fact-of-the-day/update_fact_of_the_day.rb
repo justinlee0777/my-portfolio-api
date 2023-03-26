@@ -1,8 +1,13 @@
+# frozen_string_literal: true
+
 require_relative 'get_api_ninja_fact'
 require_relative 'get_useless_fact'
 
 def update_fact_of_the_day(dynamo_resource)
-  apiSources = ['API Ninja', 'uselessfact']
+  apiSources = [
+    'API Ninja',
+    'uselessfact'
+  ]
 
   index = rand apiSources.length
 

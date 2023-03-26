@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json'
 require 'aws-sdk-dynamodb'
 
@@ -16,7 +18,7 @@ def lambda_handler(*)
     Thread.new { update_painting_of_the_day dynamo_resource }
   ]
 
-  threads.each { |thread| thread.join }
+  threads.each(&:join)
 
   { statusCode: 200, body: JSON.generate({}) }
 end

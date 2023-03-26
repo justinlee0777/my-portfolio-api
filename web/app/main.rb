@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'aws-sdk-dynamodb'
 require 'sinatra/base'
 require 'json'
 
-require_relative './poem.rb'
-require_relative './fact.rb'
-require_relative './painting.rb'
+require_relative './poem'
+require_relative './fact'
+require_relative './painting'
 
 class Main < Sinatra::Base
   def initialize
@@ -23,10 +25,8 @@ class Main < Sinatra::Base
     origin = request.get_header 'HTTP_ORIGIN'
     headers 'Access-Control-Allow-Methods': 'GET'
 
-    if origin != nil
-      if allowedOrigins.any? { |allowedOrigin| allowedOrigin.match origin }
-        headers 'Access-Control-Allow-Origin': origin
-      end
+    if !origin.nil? && allowedOrigins.any? { |allowedOrigin| allowedOrigin.match origin }
+      headers 'Access-Control-Allow-Origin': origin
     end
   end
 

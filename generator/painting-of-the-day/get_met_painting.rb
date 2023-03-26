@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'httparty'
 
 def get_met_painting

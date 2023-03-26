@@ -1,7 +1,22 @@
+# frozen_string_literal: true
+
 require_relative 'get_met_painting'
+require_relative 'get_artic_painting'
 
 def update_painting_of_the_day(dynamo_resource)
-  painting = get_met_painting
+  apiSources = [
+    'Metropolitan Museum of Art',
+    'Art Institute of Chicago'
+  ]
+
+  index = rand apiSources.length
+
+  case index
+  when 0
+    painting = get_met_painting
+  when 1
+    painting = get_artic_painting
+  end
 
   table = dynamo_resource.table('Paintings')
 
