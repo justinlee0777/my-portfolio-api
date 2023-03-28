@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 def get_artic_painting
-  artInstituteChicagoApiUrl = 'https://api.artic.edu/api/v1'
+  art_institute_chicago_api_url = 'https://api.artic.edu/api/v1'
 
-  searchUrl = "#{artInstituteChicagoApiUrl}/artworks/search?size=1"
+  search_url = "#{art_institute_chicago_api_url}/artworks/search?size=1"
 
   query = {
     q: 'painting',
@@ -12,39 +12,39 @@ def get_artic_painting
 
   headers = { 'Content-Type': 'application/json' }
 
-  describeResponse = HTTParty.get(searchUrl, query: query, headers: headers)
+  describe_response = HTTParty.get(search_url, query: query, headers: headers)
 
-  totalArtworks = describeResponse['pagination']['total']
+  total_artworks = describe_response['pagination']['total']
 
   # The API seems unable to get a page beyond 999, so we will need to limit it here, if necessary
 
-  upperBound = [totalArtworks, 999].min
+  upper_bound = [total_artworks, 999].min
 
-  paintingIndex = rand upperBound
+  painting_index = rand upper_bound
 
-  query[:from] = paintingIndex
+  query[:from] = painting_index
 
-  artworksResponse = HTTParty.get(searchUrl, query: query, headers: headers)
+  artworks_response = HTTParty.get(search_url, query: query, headers: headers)
 
-  artworkUrl = artworksResponse['data'][0]['api_link']
+  artwork_url = artworks_response['data'][0]['api_link']
 
   query = {
     fields: %w[artist_title date_end id title image_id]
   }
 
-  artworkResponse = HTTParty.get(artworkUrl, query: query, headers: headers)
+  artwork_response = HTTParty.get(artwork_url, query: query, headers: headers)
 
-  artwork = artworkResponse['data']
+  artwork = artwork_response['data']
 
-  imageUrlPartial = "#{artworkResponse['config']['iiif_url']}/#{artwork['image_id']}/full"
+  image_url_partial = "#{artwork_response['config']['iiif_url']}/#{artwork['image_id']}/full"
 
   {
     title: artwork['title'],
     artist: artwork['artist_title'],
     dateOfCreation: artwork['date_end'],
     images: {
-      highRes: "#{imageUrlPartial}/1686,/0/default.jpg",
-      inline: "#{imageUrlPartial}/400,/0/default.jpg"
+      highRes: "#{image_url_partial}/1686,/0/default.jpg",
+      inline: "#{image_url_partial}/400,/0/default.jpg"
     },
     credit: 'Art Institute of Chicago',
     creditRef: 'https://api.artic.edu/docs'

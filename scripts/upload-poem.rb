@@ -7,21 +7,21 @@ filename = ARGV[0]
 
 lines = []
 
-enumeratedLines = File.foreach(filename).lazy
+enumerated_lines = File.foreach(filename).lazy
 
 poem_id = SecureRandom.uuid
 
-title = enumeratedLines.next.rstrip
-author = enumeratedLines.next.rstrip
-translator = enumeratedLines.next.rstrip
+title = enumerated_lines.next.rstrip
+author = enumerated_lines.next.rstrip
+translator = enumerated_lines.next.rstrip
 
 loop do
-  line = enumeratedLines.next.rstrip
+  line = enumerated_lines.next.rstrip
   lines += [line]
 end
-dynamoResource = Aws::DynamoDB::Resource.new
+dynamo_resource = Aws::DynamoDB::Resource.new
 
-table = dynamoResource.table('Poem')
+table = dynamo_resource.table('Poem')
 
 table.put_item(
   {

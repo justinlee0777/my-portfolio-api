@@ -3,7 +3,7 @@
 def update_poem_of_the_day(dynamo_resource)
   table = dynamo_resource.table('Poem')
 
-  poemIds =
+  poem_ids =
     table.scan(
       {
         projection_expression: 'poem_id',
@@ -17,13 +17,13 @@ def update_poem_of_the_day(dynamo_resource)
       }
     )
 
-  poemIndex = rand poemIds['count']
+  poem_index = rand poem_ids['count']
 
-  poemId = poemIds['items'][poemIndex]['poem_id']
+  poemId = poem_ids['items'][poem_index]['poem_id']
 
-  poemResponse =
+  poem_response =
     table.get_item({ table_name: 'Poem', key: { poem_id: poemId } })
-  poem = poemResponse['item']
+  poem = poem_response['item']
 
   table.update_item(
     {

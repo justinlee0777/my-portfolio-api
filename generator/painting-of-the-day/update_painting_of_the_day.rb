@@ -4,12 +4,12 @@ require_relative 'get_met_painting'
 require_relative 'get_artic_painting'
 
 def update_painting_of_the_day(dynamo_resource)
-  apiSources = [
+  api_sources = [
     'Metropolitan Museum of Art',
     'Art Institute of Chicago'
   ]
 
-  index = rand apiSources.length
+  index = rand api_sources.length
 
   case index
   when 0

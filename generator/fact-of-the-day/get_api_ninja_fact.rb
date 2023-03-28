@@ -3,14 +3,14 @@
 require 'httparty'
 
 def get_api_ninja_fact
-  apiKey = ENV.fetch('API_NINJA_KEY', nil)
-  apiNinjaUrl = 'https://api.api-ninjas.com/v1/facts?limit=1'
+  api_key = ENV.fetch('API_NINJA_KEY', nil)
+  api_ninja_url = 'https://api.api-ninjas.com/v1/facts?limit=1'
 
   response = HTTParty.get(
-    apiNinjaUrl,
+    api_ninja_url,
     headers: {
       'Content-Type': 'application/json',
-      'X-Api-Key': apiKey
+      'X-Api-Key': api_key
     }
   )
 

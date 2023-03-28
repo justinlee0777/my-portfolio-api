@@ -4,12 +4,12 @@ require_relative 'get_api_ninja_fact'
 require_relative 'get_useless_fact'
 
 def update_fact_of_the_day(dynamo_resource)
-  apiSources = [
+  api_sources = [
     'API Ninja',
     'uselessfact'
   ]
 
-  index = rand apiSources.length
+  index = rand api_sources.length
 
   case index
   when 0

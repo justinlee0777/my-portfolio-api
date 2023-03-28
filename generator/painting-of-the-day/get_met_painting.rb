@@ -3,9 +3,9 @@
 require 'httparty'
 
 def get_met_painting
-  metMuseumApiUrl = 'https://collectionapi.metmuseum.org/public/collection/v1'
+  met_museum_api_url = 'https://collectionapi.metmuseum.org/public/collection/v1'
 
-  searchUrl = "#{metMuseumApiUrl}/search"
+  search_url = "#{met_museum_api_url}/search"
 
   query = {
     # It appears that 'q' is required, even if it is empty
@@ -17,23 +17,23 @@ def get_met_painting
 
   headers = { 'Content-Type': 'application/json' }
 
-  objectsResponse = HTTParty.get(searchUrl, query: query, headers: headers)
+  objects_response = HTTParty.get(search_url, query: query, headers: headers)
 
-  randomObjectId = objectsResponse['objectIDs'][rand objectsResponse['total']]
+  random_object_id = objects_response['objectIDs'][rand objects_response['total']]
 
-  objectUrl = "#{metMuseumApiUrl}/objects/#{randomObjectId}"
+  object_url = "#{met_museum_api_url}/objects/#{random_object_id}"
 
-  objectResponse = HTTParty.get(objectUrl, headers: headers)
+  object_response = HTTParty.get(object_url, headers: headers)
 
   {
-    title: objectResponse['title'],
-    artist: objectResponse['artistDisplayName'],
-    dateOfCreation: objectResponse['objectDate'],
-    country: objectResponse['country'],
-    city: objectResponse['city'],
+    title: object_response['title'],
+    artist: object_response['artistDisplayName'],
+    dateOfCreation: object_response['objectDate'],
+    country: object_response['country'],
+    city: object_response['city'],
     images: {
-      highRes: objectResponse['primaryImage'],
-      inline: objectResponse['primaryImageSmall']
+      highRes: object_response['primaryImage'],
+      inline: object_response['primaryImageSmall']
     },
     credit: 'Metropolitan Museum of Art',
     creditRef: 'https://metmuseum.github.io'

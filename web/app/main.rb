@@ -13,22 +13,22 @@ class Main < Sinatra::Base
   def initialize
     super
 
-    dynamoDbClient = Aws::DynamoDB::Client.new
+    dynamo_db_client = Aws::DynamoDB::Client.new
 
-    @poem = Poem.new dynamoDbClient
-    @fact = Fact.new dynamoDbClient
-    @painting = Painting.new dynamoDbClient
+    @poem = Poem.new dynamo_db_client
+    @fact = Fact.new dynamo_db_client
+    @painting = Painting.new dynamo_db_client
 
-    @coverLetterBucket = Aws::S3::Bucket.new 'justin-lee-cover-letter'
+    @cover_letter_bucket = Aws::S3::Bucket.new 'justin-lee-cover-letter'
   end
 
   before do
-    allowedOrigins = [/localhost:3000/, /iamjustinlee.com/]
+    allowed_origins = [/localhost:3000/, /iamjustinlee.com/]
 
     origin = request.get_header 'HTTP_ORIGIN'
     headers 'Access-Control-Allow-Methods': 'GET'
 
-    if !origin.nil? && allowedOrigins.any? { |allowedOrigin| allowedOrigin.match origin }
+    if !origin.nil? && allowed_origins.any? { |allowed_origin| allowed_origin.match origin }
       headers 'Access-Control-Allow-Origin': origin
     end
   end
@@ -61,14 +61,14 @@ class Main < Sinatra::Base
     content_type 'text/markdown'
     status 200
 
-    objectName = "#{params['company_name']}.md"
+    object_name = "#{params['company_name']}.md"
 
     begin
-      @coverLetterBucket.object(objectName).get['body']
+      @cover_letter_bucket.object(object_name).get['body']
     rescue Aws::S3::Errors::NoSuchKey
       content_type 'application/json'
       status 404
-      body JSON.generate message: "Resource not found: #{objectName}"
+      body JSON.generate message: "Resource not found: #{object_name}"
     end
   end
 end

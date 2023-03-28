@@ -3,10 +3,10 @@
 require 'httparty'
 
 def get_useless_fact
-  uselessFactUrl = 'https://uselessfacts.jsph.pl/api/v2/facts/random'
+  useless_fact_url = 'https://uselessfacts.jsph.pl/api/v2/facts/random'
 
   response = HTTParty.get(
-    uselessFactUrl,
+    useless_fact_url,
     headers: { 'Content-Type': 'application/json' }
   )
 
