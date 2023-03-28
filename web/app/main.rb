@@ -13,13 +13,13 @@ class Main < Sinatra::Base
   def initialize
     super
 
-    dynamo_db_client = Aws::DynamoDB::Client.new
+    dynamo_db_client = Aws::DynamoDB::Client.new({ region: 'us-east-2' })
 
     @poem = Poem.new dynamo_db_client
     @fact = Fact.new dynamo_db_client
     @painting = Painting.new dynamo_db_client
 
-    @cover_letter_bucket = Aws::S3::Bucket.new 'justin-lee-cover-letter'
+    @cover_letter_bucket = Aws::S3::Bucket.new({ name: 'justin-lee-cover-letter', region: 'us-east-2' })
   end
 
   before do
