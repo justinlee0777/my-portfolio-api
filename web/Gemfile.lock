@@ -2,8 +2,8 @@ GEM
   remote: https://rubygems.org/
   specs:
     aws-eventstream (1.2.0)
-    aws-partitions (1.730.0)
-    aws-sdk-core (3.170.1)
+    aws-partitions (1.735.0)
+    aws-sdk-core (3.171.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.651.0)
       aws-sigv4 (~> 1.5)
@@ -11,6 +11,13 @@ GEM
     aws-sdk-dynamodb (1.83.0)
       aws-sdk-core (~> 3, >= 3.165.0)
       aws-sigv4 (~> 1.1)
+    aws-sdk-kms (1.63.0)
+      aws-sdk-core (~> 3, >= 3.165.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-s3 (1.119.2)
+      aws-sdk-core (~> 3, >= 3.165.0)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.4)
     aws-sigv4 (1.5.2)
       aws-eventstream (~> 1, >= 1.0.2)
     jmespath (1.6.2)
@@ -39,10 +46,10 @@ GEM
 
 PLATFORMS
   arm64-darwin-22
-  ruby
 
 DEPENDENCIES
   aws-sdk-dynamodb
+  aws-sdk-s3
   ox
   puma
   rack
@@ -51,7 +58,7 @@ DEPENDENCIES
   sinatra
 
 RUBY VERSION
-   ruby 3.0.2p107
+   ruby 3.0.5p211
 
 BUNDLED WITH
    2.4.8
