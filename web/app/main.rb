@@ -9,6 +9,8 @@ require_relative './poem'
 require_relative './fact'
 require_relative './painting'
 
+require_relative './cover_letter'
+
 class Main < Sinatra::Base
   def initialize
     super
@@ -19,7 +21,9 @@ class Main < Sinatra::Base
     @fact = Fact.new dynamo_db_client
     @painting = Painting.new dynamo_db_client
 
-    @cover_letter_bucket = Aws::S3::Bucket.new({ name: 'justin-lee-cover-letter', region: 'us-east-2' })
+    cover_letter_bucket = Aws::S3::Bucket.new({ name: 'justin-lee-cover-letter', region: 'us-east-2' })
+
+    @cover_letter = CoverLetter.new cover_letter_bucket
   end
 
   before do
@@ -61,14 +65,12 @@ class Main < Sinatra::Base
     content_type 'text/markdown'
     status 200
 
-    object_name = "#{params['company_name']}.md"
-
     begin
-      @cover_letter_bucket.object(object_name).get['body']
-    rescue Aws::S3::Errors::NoSuchKey
+      @cover_letter.get params['company_name']
+    rescue Aws::S3::Errors::NoSuchKey => e
       content_type 'application/json'
       status 404
-      body JSON.generate message: "Resource not found: #{object_name}"
+      body e
     end
   end
 end

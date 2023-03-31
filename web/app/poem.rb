@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'net/http'
-require 'json'
-
 class Poem
   def initialize(client)
     @client = client
