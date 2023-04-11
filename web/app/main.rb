@@ -8,6 +8,7 @@ require 'json'
 require_relative './poem'
 require_relative './fact'
 require_relative './painting'
+require_relative './oblique_strategy'
 
 require_relative './cover_letter'
 
@@ -20,6 +21,7 @@ class Main < Sinatra::Base
     @poem = Poem.new dynamo_db_client
     @fact = Fact.new dynamo_db_client
     @painting = Painting.new dynamo_db_client
+    @oblique_strategy = ObliqueStrategy.new dynamo_db_client
 
     cover_letter_bucket = Aws::S3::Bucket.new({ name: 'justin-lee-cover-letter', region: 'us-east-2' })
 
@@ -59,6 +61,14 @@ class Main < Sinatra::Base
 
     painting = @painting.get
     JSON.generate(painting)
+  end
+
+  get '/oblique-strategy' do
+    content_type :json
+    status 200
+
+    oblique_strategy = @oblique_strategy.get
+    JSON.generate(oblique_strategy)
   end
 
   get '/cover-letter/:company_name' do
