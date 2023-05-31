@@ -15,7 +15,7 @@ class CoverLetter
     content += "\n\n"
     content += get_object_contents company
     content += "\n\n"
-    content += get_object_contents @ending_object_name
+    content + get_object_contents(@ending_object_name)
   end
 
   private

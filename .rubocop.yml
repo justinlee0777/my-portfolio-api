@@ -2,3 +2,9 @@ AllCops:
   NewCops: enable
   Exclude:
     - '*/vendor/**/*'
+
+Metrics/MethodLength:
+  Enabled: false
+
+Naming/AccessorMethodName:
+  Enabled: false

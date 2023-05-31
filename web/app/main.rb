@@ -77,11 +77,11 @@ class Main < Sinatra::Base
 
     begin
       @cover_letter.get params['company_name']
-    rescue CoverLetterValidationException => e
+    rescue CoverLetterValidationException
       content_type :json
       status e.status_code
       body JSON.generate message: e.message
-    rescue Aws::S3::Errors::NoSuchKey => e
+    rescue Aws::S3::Errors::NoSuchKey
       content_type :json
       status 404
       body JSON.generate message: 'The company is not found.'

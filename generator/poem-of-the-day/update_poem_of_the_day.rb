@@ -19,10 +19,10 @@ def update_poem_of_the_day(dynamo_resource)
 
   poem_index = rand poem_ids['count']
 
-  poemId = poem_ids['items'][poem_index]['poem_id']
+  poem_id = poem_ids['items'][poem_index]['poem_id']
 
   poem_response =
-    table.get_item({ table_name: 'Poem', key: { poem_id: poemId } })
+    table.get_item({ table_name: 'Poem', key: { poem_id: poem_id } })
   poem = poem_response['item']
 
   table.update_item(
