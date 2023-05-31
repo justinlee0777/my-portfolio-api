@@ -1,4 +1,8 @@
-# Random of the Day
+# My Portfolio API
+
+API for my portfolio site.
+
+## Random of the Day
 
 The purpose of the project is to generate a random thing to amuse people during the work week. Currently it supports a random poem, fact, and painting.
 
