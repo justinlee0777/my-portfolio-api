@@ -45,15 +45,7 @@ def update_painting_of_the_day(dynamo_resource)
         ':credit': painting[:credit],
         ':creditRef': painting[:creditRef]
       },
-      update_expression:
-        'SET #Title = :title\
-        , #Artist = :artist\
-        , #DateOfCreation = :dateOfCreation\
-        , #Country = :country\
-        , #City = :city\
-        , #Images = :images\
-        , #Credit = :credit\
-        , #CreditRef = :creditRef'
+      update_expression: 'SET #Title = :title, #Artist = :artist, #DateOfCreation = :dateOfCreation, #Country = :country, #City = :city, #Images = :images, #Credit = :credit, #CreditRef = :creditRef'
     }
   )
 end
