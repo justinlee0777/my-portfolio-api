@@ -7,6 +7,7 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 gem 'aws-sdk-dynamodb'
 gem 'aws-sdk-s3'
+gem 'mysql2', '= 0.5.3'
 gem 'ox'
 gem 'puma'
 gem 'rack'

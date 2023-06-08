@@ -23,6 +23,7 @@ GEM
     jmespath (1.6.2)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
+    mysql2 (0.5.3)
     nio4r (2.5.8)
     ox (2.14.14)
     puma (6.1.1)
@@ -51,6 +52,7 @@ PLATFORMS
 DEPENDENCIES
   aws-sdk-dynamodb
   aws-sdk-s3
+  mysql2 (= 0.5.3)
   ox
   puma
   rack
