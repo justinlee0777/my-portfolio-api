@@ -32,12 +32,12 @@ class Prospero
                                  'AND ' \
                                  "PageNumber BETWEEN #{starting_page} AND #{end_page}"
 
-    container_styles = mysql_client.query('SELECT * FROM container_styles ' \
-                                          "WHERE TextTitle = '#{text_title}' AND Description = '#{text_description}'" \
-                                          'LIMIT 1')
-                                   .first
+    page_styles = mysql_client.query('SELECT * FROM page_styles ' \
+                                     "WHERE TextTitle = '#{text_title}' AND Description = '#{text_description}'" \
+                                     'LIMIT 1')
+                              .first
 
-    return nil unless container_styles
+    return nil unless page_styles
 
     total_size = mysql_client.query('SELECT COUNT(*) FROM pages ' \
                                     "WHERE TextTitle = '#{text_title}' AND Description = '#{text_description}'").first['COUNT(*)']
@@ -50,29 +50,29 @@ class Prospero
 
     JSON.generate({
                     value: {
-                      containerStyles: {
-                        width: container_styles['Width'],
-                        height: container_styles['Height'],
-                        computedFontSize: container_styles['ComputedFontSize'],
-                        computedFontFamily: container_styles['ComputedFontFamily'],
-                        lineHeight: container_styles['LineHeight'],
+                      pageStyles: {
+                        width: page_styles['Width'],
+                        height: page_styles['Height'],
+                        computedFontSize: page_styles['ComputedFontSize'],
+                        computedFontFamily: page_styles['ComputedFontFamily'],
+                        lineHeight: page_styles['LineHeight'],
                         padding: {
-                          top: container_styles['PaddingTop'],
-                          right: container_styles['PaddingRight'],
-                          bottom: container_styles['PaddingBottom'],
-                          left: container_styles['PaddingLeft']
+                          top: page_styles['PaddingTop'],
+                          right: page_styles['PaddingRight'],
+                          bottom: page_styles['PaddingBottom'],
+                          left: page_styles['PaddingLeft']
                         },
                         margin: {
-                          top: container_styles['MarginTop'],
-                          right: container_styles['MarginRight'],
-                          bottom: container_styles['MarginBottom'],
-                          left: container_styles['MarginLeft']
+                          top: page_styles['MarginTop'],
+                          right: page_styles['MarginRight'],
+                          bottom: page_styles['MarginBottom'],
+                          left: page_styles['MarginLeft']
                         },
                         border: {
-                          top: container_styles['BorderTop'],
-                          right: container_styles['BorderRight'],
-                          bottom: container_styles['BorderBottom'],
-                          left: container_styles['BorderLeft']
+                          top: page_styles['BorderTop'],
+                          right: page_styles['BorderRight'],
+                          bottom: page_styles['BorderBottom'],
+                          left: page_styles['BorderLeft']
                         }
                       },
                       content: content
@@ -97,29 +97,29 @@ class Prospero
 
     mysql_client = get_sql_client
 
-    container_styles = text_data['containerStyles']
+    page_styles = text_data['pageStyles']
 
-    width = container_styles['width']
-    height = container_styles['height']
-    computed_font_size = container_styles['computedFontSize']
-    computed_font_family = container_styles['computedFontFamily']
-    line_height = container_styles['lineHeight']
-    padding_top = container_styles['padding']['top']
-    padding_right = container_styles['padding']['right']
-    padding_bottom = container_styles['padding']['bottom']
-    padding_left = container_styles['padding']['left']
-    margin_top = container_styles['margin']['top']
-    margin_right = container_styles['margin']['right']
-    margin_bottom = container_styles['margin']['bottom']
-    margin_left = container_styles['margin']['left']
-    border_top = container_styles['border']['top']
-    border_right = container_styles['border']['right']
-    border_bottom = container_styles['border']['bottom']
-    border_left = container_styles['border']['left']
+    width = page_styles['width']
+    height = page_styles['height']
+    computed_font_size = page_styles['computedFontSize']
+    computed_font_family = page_styles['computedFontFamily']
+    line_height = page_styles['lineHeight']
+    padding_top = page_styles['padding']['top']
+    padding_right = page_styles['padding']['right']
+    padding_bottom = page_styles['padding']['bottom']
+    padding_left = page_styles['padding']['left']
+    margin_top = page_styles['margin']['top']
+    margin_right = page_styles['margin']['right']
+    margin_bottom = page_styles['margin']['bottom']
+    margin_left = page_styles['margin']['left']
+    border_top = page_styles['border']['top']
+    border_right = page_styles['border']['right']
+    border_bottom = page_styles['border']['bottom']
+    border_left = page_styles['border']['left']
 
     # update or create container style based on description
     mysql_client.query '' \
-                       'REPLACE INTO container_styles ' \
+                       'REPLACE INTO page_styles ' \
                        'VALUES (' \
                        "#{width}," \
                        "#{height}," \
@@ -170,7 +170,7 @@ class Prospero
   # Data shape:
   # {
   #   "text": string,
-  #   "containerStyles": {
+  #   "pageStyles": {
   #      "width": number;
   #      "height": number;
   #      "computedFontSize": string;
@@ -200,101 +200,101 @@ class Prospero
   #   ]
   # }
   def validate_text_data(data)
-    unless data['containerStyles'].instance_of? Hash
+    unless data['pageStyles'].instance_of? Hash
       raise ProsperoValidationException,
-            '"containerStyles" should be an object.'
+            '"pageStyles" should be an object.'
     end
 
-    container_styles = data['containerStyles']
+    page_styles = data['pageStyles']
 
-    unless container_styles['width'].is_a? Numeric
+    unless page_styles['width'].is_a? Numeric
       raise ProsperoValidationException,
-            '"containerStyles.width" should be a number.'
+            '"pageStyles.width" should be a number.'
     end
-    unless container_styles['height'].is_a? Numeric
+    unless page_styles['height'].is_a? Numeric
       raise ProsperoValidationException,
-            '"containerStyles.height" should be a number.'
-    end
-
-    unless container_styles['computedFontSize'].is_a? String
-      raise ProsperoValidationException,
-            '"containerStyles.computedFontSize" should be a string.'
-    end
-    unless container_styles['computedFontFamily'].is_a? String
-      raise ProsperoValidationException,
-            '"containerStyles.computedFontFamily" should be a string.'
+            '"pageStyles.height" should be a number.'
     end
 
-    unless container_styles['padding'].instance_of? Hash
+    unless page_styles['computedFontSize'].is_a? String
       raise ProsperoValidationException,
-            '"containerStyles.padding" should be an object.'
+            '"pageStyles.computedFontSize" should be a string.'
+    end
+    unless page_styles['computedFontFamily'].is_a? String
+      raise ProsperoValidationException,
+            '"pageStyles.computedFontFamily" should be a string.'
     end
 
-    padding = container_styles['padding']
+    unless page_styles['padding'].instance_of? Hash
+      raise ProsperoValidationException,
+            '"pageStyles.padding" should be an object.'
+    end
+
+    padding = page_styles['padding']
 
     unless padding['top'].is_a? Numeric
       raise ProsperoValidationException,
-            '"containerStyles.padding.top" should be a number.'
+            '"pageStyles.padding.top" should be a number.'
     end
     unless padding['right'].is_a? Numeric
       raise ProsperoValidationException,
-            '"containerStyles.padding.right" should be a number.'
+            '"pageStyles.padding.right" should be a number.'
     end
     unless padding['bottom'].is_a? Numeric
       raise ProsperoValidationException,
-            '"containerStyles.padding.bottom" should be a number.'
+            '"pageStyles.padding.bottom" should be a number.'
     end
     unless padding['left'].is_a? Numeric
       raise ProsperoValidationException,
-            '"containerStyles.padding.left" should be a number.'
+            '"pageStyles.padding.left" should be a number.'
     end
 
-    unless container_styles['margin'].instance_of? Hash
+    unless page_styles['margin'].instance_of? Hash
       raise ProsperoValidationException,
-            '"containerStyles.margin" should be an object.'
+            '"pageStyles.margin" should be an object.'
     end
 
-    margin = container_styles['margin']
+    margin = page_styles['margin']
 
     unless margin['top'].is_a? Numeric
       raise ProsperoValidationException,
-            '"containerStyles.margin.top" should be a number.'
+            '"pageStyles.margin.top" should be a number.'
     end
     unless margin['right'].is_a? Numeric
       raise ProsperoValidationException,
-            '"containerStyles.margin.right" should be a number.'
+            '"pageStyles.margin.right" should be a number.'
     end
     unless margin['bottom'].is_a? Numeric
       raise ProsperoValidationException,
-            '"containerStyles.margin.bottom" should be a number.'
+            '"pageStyles.margin.bottom" should be a number.'
     end
     unless margin['left'].is_a? Numeric
       raise ProsperoValidationException,
-            '"containerStyles.margin.left" should be a number.'
+            '"pageStyles.margin.left" should be a number.'
     end
 
-    unless container_styles['border'].instance_of? Hash
+    unless page_styles['border'].instance_of? Hash
       raise ProsperoValidationException,
-            '"containerStyles.border" should be an object.'
+            '"pageStyles.border" should be an object.'
     end
 
-    border = container_styles['border']
+    border = page_styles['border']
 
     unless border['top'].is_a? Numeric
       raise ProsperoValidationException,
-            '"containerStyles.border.top" should be a number.'
+            '"pageStyles.border.top" should be a number.'
     end
     unless border['right'].is_a? Numeric
       raise ProsperoValidationException,
-            '"containerStyles.border.right" should be a number.'
+            '"pageStyles.border.right" should be a number.'
     end
     unless border['bottom'].is_a? Numeric
       raise ProsperoValidationException,
-            '"containerStyles.border.bottom" should be a number.'
+            '"pageStyles.border.bottom" should be a number.'
     end
     unless border['left'].is_a? Numeric
       raise ProsperoValidationException,
-            '"containerStyles.border.left" should be a number.'
+            '"pageStyles.border.left" should be a number.'
     end
 
     unless data['pages'].instance_of? Array
