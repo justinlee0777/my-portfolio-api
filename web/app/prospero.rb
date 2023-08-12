@@ -50,6 +50,7 @@ class Prospero
 
     JSON.generate({
                     value: {
+                      html: !page_styles['HTML'].zero?,
                       pageStyles: {
                         width: page_styles['Width'],
                         height: page_styles['Height'],
@@ -117,6 +118,8 @@ class Prospero
     border_bottom = page_styles['border']['bottom']
     border_left = page_styles['border']['left']
 
+    html = text_data['html']
+
     # update or create container style based on description
     mysql_client.query '' \
                        'REPLACE INTO page_styles ' \
@@ -139,7 +142,8 @@ class Prospero
                        "#{border_left}," \
                        "'#{text_description}'," \
                        "'#{text_title}'," \
-                       "#{line_height}" \
+                       "#{line_height}," \
+                       "#{html}" \
                        ')'
 
     # delete existing pages
@@ -169,6 +173,7 @@ class Prospero
 
   # Data shape:
   # {
+  #   "html": boolean,
   #   "text": string,
   #   "pageStyles": {
   #      "width": number;
@@ -200,6 +205,11 @@ class Prospero
   #   ]
   # }
   def validate_text_data(data)
+    unless [true, false].include? data['html']
+      raise ProsperoValidationException,
+            '"html" should be a boolean.'
+    end
+
     unless data['pageStyles'].instance_of? Hash
       raise ProsperoValidationException,
             '"pageStyles" should be an object.'
