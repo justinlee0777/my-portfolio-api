@@ -21,7 +21,9 @@ class Main < Sinatra::Base
 
     dynamo_db_client = Aws::DynamoDB::Client.new({ region: 'us-east-2' })
 
-    @poem = Poem.new dynamo_db_client
+    poem_bucket = Aws::S3::Bucket.new({ name: 'poem-of-the-day', region: 'us-east-1' })
+
+    @poem = Poem.new(dynamo_db_client, poem_bucket)
     @fact = Fact.new dynamo_db_client
     @painting = Painting.new dynamo_db_client
     @oblique_strategy = ObliqueStrategy.new dynamo_db_client

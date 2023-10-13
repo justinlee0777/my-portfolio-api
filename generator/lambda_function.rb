@@ -9,15 +9,15 @@ require_relative './painting-of-the-day/update_painting_of_the_day'
 require_relative './oblique_strategy_of_the_day/update_oblique_strategy_of_the_day'
 
 def lambda_handler(*)
-  dynamo_resource = Aws::DynamoDB::Resource.new({ region: 'us-east-2' })
+  dynamo_client = Aws::DynamoDB::Client.new({ region: 'us-east-2' })
 
   threads = []
 
   threads += [
-    Thread.new { update_poem_of_the_day dynamo_resource },
-    Thread.new { update_fact_of_the_day dynamo_resource },
-    Thread.new { update_painting_of_the_day dynamo_resource },
-    Thread.new { update_oblique_strategy_of_the_day dynamo_resource }
+    Thread.new { update_poem_of_the_day dynamo_client },
+    Thread.new { update_fact_of_the_day dynamo_client },
+    Thread.new { update_painting_of_the_day dynamo_client },
+    Thread.new { update_oblique_strategy_of_the_day dynamo_client }
   ]
 
   threads.each(&:join)

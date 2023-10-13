@@ -3,7 +3,7 @@
 require_relative 'get_met_painting'
 require_relative 'get_artic_painting'
 
-def update_painting_of_the_day(dynamo_resource)
+def update_painting_of_the_day(dynamo_client)
   api_sources = [
     'Metropolitan Museum of Art',
     'Art Institute of Chicago'
@@ -18,10 +18,9 @@ def update_painting_of_the_day(dynamo_resource)
     painting = get_artic_painting
   end
 
-  table = dynamo_resource.table('Paintings')
-
-  table.update_item(
+  dynamo_client.update_item(
     {
+      table_name: 'Paintings',
       key: {
         painting_id: 'painting-of-the-day'
       },

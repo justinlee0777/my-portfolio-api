@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-def update_oblique_strategy_of_the_day(dynamo_resource)
-  table = dynamo_resource.table('oblique_strategies')
-
+def update_oblique_strategy_of_the_day(dynamo_client)
   oblique_strategy_ids =
-    table.scan(
+    dynamo_client.scan(
       {
+        table_name: 'oblique_strategies',
         projection_expression: 'oblique_strategy_id',
         expression_attribute_names: {
           '#osid': 'oblique_strategy_id'
@@ -22,11 +21,12 @@ def update_oblique_strategy_of_the_day(dynamo_resource)
   oblique_strategy_id = oblique_strategy_ids['items'][oblique_strategy_index]['oblique_strategy_id']
 
   oblique_strategy_response =
-    table.get_item({ key: { oblique_strategy_id: oblique_strategy_id } })
+    dynamo_client.get_item({ table_name: 'oblique_strategies', key: { oblique_strategy_id: oblique_strategy_id } })
   oblique_strategy = oblique_strategy_response['item']
 
-  table.update_item(
+  dynamo_client.update_item(
     {
+      table_name: 'oblique_strategies',
       key: {
         oblique_strategy_id: 'oblique_strategy_of_the_day'
       },

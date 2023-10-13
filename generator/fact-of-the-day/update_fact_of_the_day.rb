@@ -3,7 +3,7 @@
 require_relative 'get_api_ninja_fact'
 require_relative 'get_useless_fact'
 
-def update_fact_of_the_day(dynamo_resource)
+def update_fact_of_the_day(dynamo_client)
   api_sources = [
     'API Ninja',
     'uselessfact'
@@ -18,10 +18,9 @@ def update_fact_of_the_day(dynamo_resource)
     fact = get_useless_fact
   end
 
-  table = dynamo_resource.table('Facts')
-
-  table.update_item(
+  dynamo_client.update_item(
     {
+      table_name: 'Facts',
       key: {
         fact_id: 'fact-of-the-day'
       },

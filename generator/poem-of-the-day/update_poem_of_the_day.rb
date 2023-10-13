@@ -1,32 +1,17 @@
 # frozen_string_literal: true
 
-def update_poem_of_the_day(dynamo_resource)
-  table = dynamo_resource.table('Poem')
+def update_poem_of_the_day(dynamo_client)
+  table_description = dynamo_client.describe_table({ table_name: 'Poem' })
 
-  poem_ids =
-    table.scan(
-      {
-        projection_expression: 'poem_id',
-        expression_attribute_names: {
-          '#pid': 'poem_id'
-        },
-        expression_attribute_values: {
-          ':poemOfTheDay': 'poem-of-the-day'
-        },
-        filter_expression: '#pid <> :poemOfTheDay'
-      }
-    )
-
-  poem_index = rand poem_ids['count']
-
-  poem_id = poem_ids['items'][poem_index]['poem_id']
+  index = rand(table_description['table']['item_count'] - 1)
 
   poem_response =
-    table.get_item({ table_name: 'Poem', key: { poem_id: poem_id } })
+    dynamo_client.get_item({ table_name: 'Poem', key: { poem_id: index.to_s } })
   poem = poem_response['item']
 
-  table.update_item(
+  dynamo_client.update_item(
     {
+      table_name: 'Poem',
       key: {
         poem_id: 'poem-of-the-day'
       },
