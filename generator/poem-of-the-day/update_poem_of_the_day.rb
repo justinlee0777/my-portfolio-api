@@ -19,16 +19,18 @@ def update_poem_of_the_day(dynamo_client)
         '#Title': 'title',
         '#Author': 'author',
         '#Translator': 'translator',
-        '#Lines': 'lines'
+        '#Lines': 'lines',
+        '#ObjectName': 'object_name'
       },
       expression_attribute_values: {
         ':title': poem['title'],
         ':author': poem['author'],
         ':translator': poem['translator'],
-        ':lines': poem['lines']
+        ':lines': poem['lines'],
+        ':objectName': poem['object_name']
       },
       update_expression:
-        'SET #Title = :title, #Author = :author, #Translator = :translator, #Lines = :lines'
+        'SET #Title = :title, #Author = :author, #Translator = :translator, #Lines = :lines, #ObjectName = :objectName'
     }
   )
 end
