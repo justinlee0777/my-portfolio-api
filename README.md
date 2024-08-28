@@ -2,6 +2,8 @@
 
 API for my portfolio site.
 
+08/28/2024: As of this date, the API is obsolete and migrated to NodeJS. However, the Random of the Day cron job is still in use.
+
 ## Random of the Day
 
 The purpose of the project is to generate a random thing to amuse people during the work week. Currently it supports a random poem, fact, and painting.
