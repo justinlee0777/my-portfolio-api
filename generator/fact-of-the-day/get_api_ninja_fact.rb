@@ -4,7 +4,7 @@ require 'httparty'
 
 def get_api_ninja_fact
   api_key = ENV.fetch('API_NINJA_KEY', nil)
-  api_ninja_url = 'https://api.api-ninjas.com/v1/facts?limit=1'
+  api_ninja_url = 'https://api.api-ninjas.com/v1/facts'
 
   response = HTTParty.get(
     api_ninja_url,
